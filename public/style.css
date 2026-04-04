@@ -685,6 +685,16 @@ input:focus {
 .billing-user-header .bu-total { color: var(--clr-primary-light); font-weight: 700; font-size: 1.1rem; }
 .billing-user-orders { font-size: 0.82rem; color: var(--clr-text-secondary); }
 
+/* Export buttons row */
+.export-buttons {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+.export-buttons .btn {
+  flex: 1;
+}
+
 /* ---------- INPUT ROW ---------- */
 .input-row {
   display: flex;

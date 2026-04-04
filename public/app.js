@@ -652,9 +652,29 @@ async function loadBilling() {
       `).join('');
     }
 
-    // Export button
+    // Export buttons
     exportBtn.onclick = () => {
       window.open(`/api/billing/export?month=${month}`, '_blank');
+    };
+
+    // PDF export
+    const pdfBtn = $('#export-pdf-btn');
+    pdfBtn.onclick = async () => {
+      try {
+        const response = await fetch(`/api/billing/export-pdf?month=${month}`, {
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        if (!response.ok) throw new Error('PDF generation failed');
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Gurav_Mess_Bill_${month}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert('Failed to download PDF: ' + err.message);
+      }
     };
   } catch (err) {
     console.error(err);
