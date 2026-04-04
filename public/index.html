@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Mess Manager — Daily food ordering and billing for Gurav Mess hostel students.">
+  <title>Smart Mess Manager — Gurav Mess</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="screen active">
+    <div class="login-container">
+      <div class="login-logo">
+        <span class="logo-icon">🍽️</span>
+        <h1>Gurav Mess</h1>
+        <p class="tagline">Smart Mess Manager</p>
+      </div>
+      <form id="login-form" class="login-form">
+        <div class="input-group">
+          <label for="login-name">Name</label>
+          <input type="text" id="login-name" placeholder="Enter your name" required autocomplete="username">
+        </div>
+        <div class="input-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Enter password" required autocomplete="current-password">
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-primary btn-full">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-loader hidden">⏳</span>
+        </button>
+        <p id="login-error" class="error-msg hidden"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app-screen" class="screen hidden">
+    <!-- HEADER -->
+    <header id="app-header">
+      <div class="header-left">
+        <span class="header-logo">🍽️</span>
+        <div>
+          <h2 class="header-title">Gurav Mess</h2>
+          <span id="header-user" class="header-subtitle"></span>
+        </div>
+      </div>
+      <button id="logout-btn" class="btn btn-ghost" title="Logout">
+        <span>Logout</span>
+      </button>
+    </header>
+
+    <!-- NAV TABS -->
+    <nav id="app-nav">
+      <!-- Tabs injected by JS based on role -->
+    </nav>
+
+    <!-- NOTIFICATION BAR -->
+    <div id="notification-bar" class="notification-bar hidden"></div>
+
+    <!-- TAB CONTENT PANELS -->
+    <main id="app-main">
+
+      <!-- ===== TODAY'S MENU (both roles) ===== -->
+      <section id="tab-menu" class="tab-panel">
+        <div class="panel-header">
+          <h3>📋 Today's Menu</h3>
+          <div class="date-picker-row">
+            <label for="menu-date">Date:</label>
+            <input type="date" id="menu-date">
+          </div>
+        </div>
+        <div id="menu-status" class="status-chip"></div>
+        <div id="menu-items-list" class="card-list"></div>
+
+        <!-- Admin: Add/Edit Menu -->
+        <div id="admin-menu-editor" class="hidden card glass-card">
+          <h4>✏️ Edit Menu</h4>
+          <div id="editor-items" class="editor-items"></div>
+          <div class="editor-actions">
+            <button id="add-item-btn" class="btn btn-sm btn-secondary">+ Add Item</button>
+            <button id="save-menu-btn" class="btn btn-sm btn-primary">💾 Save Menu</button>
+            <button id="toggle-mess-btn" class="btn btn-sm btn-warning"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ORDER FOOD (user only) ===== -->
+      <section id="tab-order" class="tab-panel hidden">
+        <div class="panel-header">
+          <h3>🛒 Place Order</h3>
+        </div>
+        <p class="info-text">Select items for today. Cutoff: <strong id="cutoff-time"></strong> AM IST</p>
+        <div id="order-items-checklist" class="checklist"></div>
+        <div id="order-total-display" class="order-total">Total: ₹0</div>
+        <button id="place-order-btn" class="btn btn-primary btn-full">✅ Place Order</button>
+        <p id="order-message" class="info-text hidden"></p>
+      </section>
+
+      <!-- ===== REQUESTS (both roles) ===== -->
+      <section id="tab-requests" class="tab-panel hidden">
+        <div class="panel-header">
+          <h3>💡 Food Requests</h3>
+        </div>
+
+        <!-- User: Create Request -->
+        <div id="request-form-section" class="card glass-card">
+          <h4>Request a New Item</h4>
+          <div class="input-row">
+            <input type="text" id="request-item-name" placeholder="Item name (e.g., Paneer Tikka)">
+            <button id="submit-request-btn" class="btn btn-sm btn-primary">Send</button>
+          </div>
+        </div>
+
+        <!-- Pending Requests list -->
+        <div id="requests-list" class="card-list"></div>
+      </section>
+
+      <!-- ===== MY SPENDING (user only) ===== -->
+      <section id="tab-spending" class="tab-panel hidden">
+        <div class="panel-header">
+          <h3>📊 My Spending</h3>
+          <div class="date-picker-row">
+            <label for="spending-month">Month:</label>
+            <input type="month" id="spending-month">
+          </div>
+        </div>
+        <div id="spending-summary" class="summary-cards"></div>
+        <div id="spending-orders-list" class="card-list"></div>
+      </section>
+
+      <!-- ===== ALL ORDERS (admin) ===== -->
+      <section id="tab-all-orders" class="tab-panel hidden">
+        <div class="panel-header">
+          <h3>📦 All Orders</h3>
+          <div class="date-picker-row">
+            <label for="all-orders-date">Date:</label>
+            <input type="date" id="all-orders-date">
+          </div>
+        </div>
+        <div id="all-orders-summary" class="summary-cards"></div>
+        <div id="all-orders-list" class="card-list"></div>
+      </section>
+
+      <!-- ===== BILLING (admin) ===== -->
+      <section id="tab-billing" class="tab-panel hidden">
+        <div class="panel-header">
+          <h3>💰 Monthly Billing</h3>
+          <div class="date-picker-row">
+            <label for="billing-month">Month:</label>
+            <input type="month" id="billing-month">
+          </div>
+        </div>
+        <div id="billing-grand-total" class="grand-total-card"></div>
+        <div id="billing-user-cards" class="card-list"></div>
+        <button id="export-bill-btn" class="btn btn-secondary btn-full">📄 Export Bill (HTML)</button>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

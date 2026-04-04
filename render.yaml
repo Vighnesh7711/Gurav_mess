@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: smart-mess-manager
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CUTOFF_HOUR
+        value: "11"
