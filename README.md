@@ -92,11 +92,10 @@ Select Blueprint to deploy using the render.yaml file.
 Add your MONGODB_URI and JWT_SECRET as environment variables in the Render dashboard.
 
 📂 Project Structure
-Plaintext
-├── middleware/       # JWT authentication and Role-based access control
-├── models/           # Mongoose schemas (Menu, Order, Request, User)
-├── public/           # Frontend assets (index.html, app.js, style.css)
-├── routes/           # Express API endpoints
-├── .env.example      # Example environment variables
-├── render.yaml       # Deployment configuration for Render
-└── server.js         # Application entry point and DB connection
+├── middleware/       # JWT authentication and Role-based access control<br>
+├── models/           # Mongoose schemas (Menu, Order, Request, User)<br>
+├── public/           # Frontend assets (index.html, app.js, style.css)<br>
+├── routes/           # Express API endpoints<br>
+├── .env.example      # Example environment variables<br>
+├── render.yaml       # Deployment configuration for Render<br>
+└── server.js         # Application entry point and DB connection<br>
